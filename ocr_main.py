@@ -11,9 +11,10 @@ def ocr_text(image):
     # Extract text from the result
     text = ' '.join([text for _, text, _ in result])
     # Get the detected language
-    languages = [lang for _, _, lang in result]
+    languages = [lang for _, _, lang in result if lang is not None]
     detected_language = ', '.join(set(languages))  # Set to remove duplicates
     return text, detected_language
+
 
 def main():
     st.title("   OCR अँप   ")
