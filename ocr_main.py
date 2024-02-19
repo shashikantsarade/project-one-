@@ -3,7 +3,7 @@ from PIL import Image
 import easyocr
 
 # Initialize the EasyOCR reader with automatic language detection
-reader = easyocr.Reader(['auto'])
+reader = easyocr.Reader(['en', 'hi', 'mr'])
 
 def ocr_text(image):
     # Perform OCR on the image
