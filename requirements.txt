@@ -1,5 +1,3 @@
 streamlit
 pillow
-pytesseract
-python-dotenv
-tesseract-ocr
+easyocr
