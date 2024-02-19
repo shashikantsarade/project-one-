@@ -1,21 +1,22 @@
-from dotenv import load_dotenv
-
-load_dotenv()  # take environment variables from .env.
-
 import streamlit as st
 from PIL import Image
-import pytesseract
+import easyocr
 
-# Set Tesseract path (change it as per your system configuration)
-pytesseract.pytesseract.tesseract_cmd =r'C:\Users\DELL\pytesseract-0.3.10'
+# Initialize the EasyOCR reader with automatic language detection
+reader = easyocr.Reader(['auto'])
 
 def ocr_text(image):
     # Perform OCR on the image
-    text = pytesseract.image_to_string(image)
-    return text
+    result = reader.readtext(image)
+    # Extract text from the result
+    text = ' '.join([text for _, text, _ in result])
+    # Get the detected language
+    languages = [lang for _, _, lang in result]
+    detected_language = ', '.join(set(languages))  # Set to remove duplicates
+    return text, detected_language
 
 def main():
-    st.title("Image OCR App")
+    st.title("   OCR अँप   ")
     
     # File uploader
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -26,9 +27,17 @@ def main():
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
         # Perform OCR and display extracted text
-        if st.button('Extract Text'):
-            text = ocr_text(image)
-            st.write('Extracted Text:', text)
+        if st.button(' माहिती पहा '):
+            with st.spinner('Performing OCR...'):
+                text, detected_language = ocr_text(image)
+                st.success('OCR Completed!')
+
+                # Display detected language
+                st.write(f"Detected Language(s): {detected_language}")
+
+                # Display the extracted text in a box
+                st.info('Extracted Text:')
+                st.text_area(label='', value=text, height=200, max_chars=None)
 
 if __name__ == '__main__':
     main()
