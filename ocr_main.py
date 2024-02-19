@@ -12,7 +12,8 @@ def ocr_text(image):
     text = ' '.join([text for _, text, _ in result])
     # Get the detected language
     languages = [lang for _, _, lang in result if lang is not None]
-    detected_language = ', '.join(set(languages))  # Set to remove duplicates
+    # Remove None values and duplicates, and join the languages
+    detected_language = ', '.join(set(filter(None, languages)))
     return text, detected_language
 
 
