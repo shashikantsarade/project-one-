@@ -7,7 +7,7 @@ from PIL import Image
 import pytesseract
 
 # Set Tesseract path (change it as per your system configuration)
-pytesseract.pytesseract.tesseract_cmd ='none'
+pytesseract.pytesseract.tesseract_cmd =r'C:\Users\DELL\pytesseract-0.3.10'
 
 def ocr_text(image):
     # Perform OCR on the image
